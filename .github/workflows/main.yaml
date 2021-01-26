@@ -45,7 +45,7 @@ jobs:
       - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
       - run: docker image build -f ../dockerfile -t videoshare ..
       - run: docker image tag videoshare revature-team-videos/videoshare
-      - run: docker image push videoswithfriends/revature-videoswithfriends:revature-team-videos/videoshare
+      - run: docker image push videoswithfriends/revature-videoswithfriends
       - run: docker logout
 
 on: push
