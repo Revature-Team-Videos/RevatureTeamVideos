@@ -11,7 +11,7 @@ namespace VideoShare.Domain.Models
         public Room()
         {
             Party = new List<User>();
-            Host = Party.FirstOrDefault();
+            Host = Party.FirstOrDefault(); //Move to user and if user is host also not mapped
             Roomchat = new ChatBox();
         }
 

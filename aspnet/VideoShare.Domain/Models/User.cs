@@ -7,6 +7,7 @@ namespace VideoShare.Domain.Models
     {
         public string Username { get; set; }
         public List<User> Friends { get; set; }
+        public List<User> BlockedUsers { get; set; }
         public string Email { get; set; }
         public User()
         {
