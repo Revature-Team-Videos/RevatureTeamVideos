@@ -44,8 +44,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
       - run: docker image build -f ../dockerfile -t videoshare ..
-      - run: docker image tag videoshare revature-team-videos/videoshare
-      - run: docker push videoswithfriends/revature-videoswithfriends:videoshare
+      - run: docker image tag videoshare videoswithfriends/revature-videoswithfriends:v0
+      - run: docker push videoswithfriends/revature-videoswithfriends:v0
       - run: docker logout
 
 on: push
