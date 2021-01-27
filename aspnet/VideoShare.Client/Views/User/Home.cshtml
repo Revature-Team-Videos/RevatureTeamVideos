@@ -1,0 +1,9 @@
+@model VideoShare.Client.Models.UserViewModel
+
+<form asp-action="CreateRoom" asp-controller="user" asp-antiforgery="true" method="GET">
+    <button type="submit">Create Room</button>
+</form>
+<form asp-action="JoinRoom" asp-controller="user" asp-antiforgery="true" method="POST">
+    <input type="text" name="RoomID" id="RoomID">
+    <button type="submit">Join Room</button>
+</form>
