@@ -1,13 +1,17 @@
 using System.Collections.Generic;
+using StoringApi.Abstracts;
 
-namespace VideoShare.Domain.Models
+namespace StoringApi.Service.Models
 {
-    public class ChatBox
+    public class ChatBox : AEntity
     {
-        public List<string> Chat { get; set; }
+        public List<Message> Chat { get; set; }
+
+        public long RoomEntityID { get; set; }
+
         public ChatBox()
         {
-            Chat = new List<string>();
+            Chat = new List<Message>();
         }
     }
 }

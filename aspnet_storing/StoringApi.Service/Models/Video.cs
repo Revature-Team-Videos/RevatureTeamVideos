@@ -1,11 +1,14 @@
 using System.Collections.Generic;
+using StoringApi.Abstracts;
 
-namespace VideoShare.Domain.Models
+namespace StoringApi.Service.Models
 {
-    public class Video
+    public class Video : AEntity
     {
         public List<User> Viewers { get; set; }
+
         public string Username { get; set; }
+        
         public Video()
         {
             Viewers = new List<User>();
