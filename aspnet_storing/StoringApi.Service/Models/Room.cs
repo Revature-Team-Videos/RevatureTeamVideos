@@ -1,24 +1,34 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using StoringApi.Abstracts;
 
-namespace VideoShare.Domain.Models
+namespace StoringApi.Service.Models
 {
-    public class Room
+    public class Room : AEntity
     {
         public List<User> Party { get; set; }
+
+        [NotMapped]
         public User Host { get; set; }
-        public ChatBox Roomchat { get; set; }
+
+        public ChatBox RoomChat { get; set; }
+
+        public bool IsActive { get; set; }
+        
         public Room()
         {
             Party = new List<User>();
             Host = Party.FirstOrDefault(); //Move to user and if user is host also not mapped
-            Roomchat = new ChatBox();
+            RoomChat = new ChatBox();
         }
 
-        public void DeleteMessage(int messageindex)
+        public void DeleteMessage(string username, int messageindex)
         {
-            // have to make this host only
-            Roomchat.Chat.RemoveAt(messageindex);
+            if(Host != null && Host.Username == username)
+            {
+                RoomChat.Chat.RemoveAt(messageindex);;
+            }
         }
     }
 }
