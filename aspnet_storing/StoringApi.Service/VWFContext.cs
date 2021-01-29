@@ -12,21 +12,14 @@ namespace StoringApi.Service
 
     public DbSet<Message> Messages;
 
-    public DbSet<Video> Videos;
-
     public VWFContext(DbContextOptions<VWFContext> options) : base(options){}
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
       builder.Entity<User>().HasKey(user => user.EntityID);
-      builder.Entity<User>().HasMany(user => user.Friends);
-      builder.Entity<User>().HasMany(user => user.BlockedUsers);
 
       builder.Entity<ChatBox>().HasKey(chatBox => chatBox.EntityID);
       builder.Entity<ChatBox>().HasMany(chatBox => chatBox.Chat);
-
-      builder.Entity<Video>().HasKey(video => video.EntityID);
-      builder.Entity<Video>().HasMany(video => video.Viewers);
 
       builder.Entity<Room>().HasKey(room => room.EntityID);
       builder.Entity<Room>().HasMany(room => room.Party);
