@@ -17,7 +17,7 @@ namespace VideoShare.Client.Controllers
         [HttpGet("/NewRoom")]
         public IActionResult CreateRoom(string username)
         {
-            User user = _repo.GetUser(username);
+          //  User user = _repo.GetUser(username);
             Room room = new Room();
             room.Host = user;
             
@@ -36,7 +36,7 @@ namespace VideoShare.Client.Controllers
         public IActionResult ReturnVideos(string videosearch)
         {
             UserViewModel userview = new UserViewModel();
-            userview.VideoSearch = _repo.GetVideos(videosearch);
+        //    userview.VideoSearch = _repo.GetVideos(videosearch);
 
             return View("SelectVideo", userview);
         }

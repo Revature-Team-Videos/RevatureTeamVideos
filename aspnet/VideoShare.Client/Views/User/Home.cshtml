@@ -1,9 +1,73 @@
 @model VideoShare.Client.Models.UserViewModel
 
-<form asp-action="CreateRoom" asp-controller="user" asp-antiforgery="true" method="GET">
-    <button type="submit">Create Room</button>
-</form>
-<form asp-action="JoinRoom" asp-controller="user" asp-antiforgery="true" method="POST">
-    <input type="text" name="RoomID" id="RoomID">
-    <button type="submit">Join Room</button>
-</form>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://jacoblett.github.io/bootstrap4-latest/bootstrap-4-latest.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .jumbotron {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .jumbotron .container {
+                position: relative;
+                z-index: 2;
+                background: rgba(0,0,0,0.2);
+                padding: 2rem;
+                border: 1px solid rgba(0,0,0,0.1);
+                border-radius: 3px;
+            }
+
+        .jumbotron-background {
+            object-fit: cover;
+            font-family: 'object-fit: cover;';
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            opacity: 0.5;
+        }
+
+        img.blur {
+            -webkit-filter: blur(4px);
+            filter: blur(4px);
+            filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');
+        }
+    </style>
+</head>
+<body>
+
+    <div class="jumbotron jumbotron-fluid bg-dark">
+
+        <div class="jumbotron-background">
+            <img src="https://www.pcgamesn.com/wp-content/uploads/2020/12/rocket-league-season-2.jpg" class="blur ">
+        </div>
+
+        <div class="container text-white">
+
+            <h1 class="display-4">Hello, friends!</h1>
+            <p class="lead"> Add some descriptions.</p>
+            <hr class="my-4">
+
+            <form asp-action="CreateRoom" asp-controller="user" asp-antiforgery="true" method="GET">
+                <div class="form-group">
+                    <button class="btn btn-light" type="submit">Create Room</button>
+                </div>
+            </form>
+            <p class="lead"> If you have a session number, please put it below and click Join.</p>
+            <form asp-action="JoinRoom" asp-controller="user" asp-antiforgery="true" method="POST">
+                <input type="text" name="RoomID" id="RoomID">
+                <button class="btn btn-light" type="submit">Join Room</button>
+            </form>
+
+        </div>
+
+
+    </div>
+    <script>$(function () { objectFitImages() });</script>
+
+</body>
+</html>
