@@ -21,6 +21,40 @@ namespace StoringApi.Service.Models
             Party = new List<User>();
             Host = Party.FirstOrDefault(); //Move to user and if user is host also not mapped
             RoomChat = new ChatBox();
+            IsActive = true;
+        }
+
+        public bool AddViewer(User user)
+        {
+            bool userExist = false;
+            
+            foreach(var viewer in Party)
+            {
+                if(user.Username == viewer.Username)
+                {
+                    userExist = true;
+                }
+            }
+
+            if(!userExist && Party.Count <= 5)
+            {
+                Party.Add(user);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool RemoveViewer(User user)
+        {
+            return Party.Remove(user);
+        }
+
+        public void CloseRoom()
+        {
+            Host = null;
+            Party = new List<User>();
+            IsActive = false;
         }
 
         public void DeleteMessage(string username, int messageindex)
