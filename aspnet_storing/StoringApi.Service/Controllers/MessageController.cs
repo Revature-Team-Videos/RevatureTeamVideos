@@ -15,5 +15,22 @@ namespace StoringApi.Service.Controllers
       _context = context;
     }
 
+    [Route("/messages/users")]
+    [HttpGet]
+    public IActionResult GetMessagesByUser(User user)
+    {
+      var messages = _context.GetMessagesByUser(user);
+
+      return Ok(messages);
+    }
+
+    [Route("/messages/chatid/{id}")]
+    [HttpGet]
+    public IActionResult GetMessagesByUser(long id)
+    {
+      var messages = _context.GetMessagesByChatID(id);
+
+      return Ok(messages);
+    }
   }
 }

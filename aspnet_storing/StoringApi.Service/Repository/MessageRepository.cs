@@ -18,7 +18,6 @@ namespace StoringApi.Service.Repository
     public List<Message> GetMessagesByChatID(long id)
     {
       var messages = _context.Set<Message>()
-        .Include(m => m.TimeStamp)
         .Include(m => m.User)
         .Where(m => m.ChatBoxEntityID == id);
 
@@ -28,7 +27,6 @@ namespace StoringApi.Service.Repository
     public List<Message> GetMessagesByUser(User user)
     {
       var messages = _context.Set<Message>()
-        .Include(m => m.TimeStamp)
         .Include(m => m.User)
         .Where(m => m.User.Email == user.Email && m.User.Username == user.Username);
 
@@ -38,7 +36,6 @@ namespace StoringApi.Service.Repository
     public List<Message> GetMessagesByUser(User user, int amount)
     {
       var messages = _context.Set<Message>()
-        .Include(m => m.TimeStamp)
         .Include(m => m.User)
         .Where(m => m.User.Email == user.Email && m.User.Username == user.Username)
         .OrderByDescending(m => m.EntityID)
