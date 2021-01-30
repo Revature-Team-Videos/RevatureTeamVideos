@@ -55,20 +55,32 @@ namespace StoringApi.Service.Controllers
       return NotFound(null);
     }
 
-    [Route("/users/add/{user}")]
+    [Route("/users/add")]
     [HttpPost]
-    [Consumes("application/json")]
     public IActionResult AddUser(User user)
     {
       var emailusernameExists = _context.EmailOrUsernameExists(user.Username, user.Email);
 
       if(!emailusernameExists)
       {
-        _context.Add<User>(user);
-        return Ok(user);
+        User newUser = new User()
+        {
+          Username = user.Username,
+          Email = user.Email
+        };
+        _context.Add<User>(newUser);
+        _context.Save();
+        return Ok(newUser);
       }
       
       return Conflict(user);
+    }
+
+    [Route("/users/testme")]
+    [HttpPost]
+    public IActionResult Test(User user)
+    {
+      return Ok(user);
     }
   }
 }
