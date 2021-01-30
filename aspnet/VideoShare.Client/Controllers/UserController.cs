@@ -1,6 +1,6 @@
+using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using VideoShare.Client.Models;
-using VideoShare.Domain.Models;
 
 namespace VideoShare.Client.Controllers
 {
@@ -8,11 +8,39 @@ namespace VideoShare.Client.Controllers
     [Route("")]
     public class UserController : Controller
     {   
+        private string apiUrl = "http://localhost:8080/ChatBox";
+        private HttpClient _http = new HttpClient();
         [HttpGet]
         public IActionResult Home()
         {
 
             return View("Home");
+        }
+        [HttpPost("/CreateAccount")]
+        public IActionResult CreateAccount(string username, string email)
+        {
+            UserViewModel userview = new UserViewModel();
+            userview.Email = email;
+            userview.Username = username;
+            User user = new User(userview.Username);
+            user.Email = userview.Email;
+            // create repo method for new user
+            _repo.Update();
+
+            return View("logon", userview);
+        }
+        [HttpPost("/Login")]
+        public IActionResult Login(string Username)
+        {
+           User user =_repo.GetUser(Username);
+            if (user != null)
+            {
+                UserViewModel userview = new UserViewModel();
+                userview.Username = user.Username;
+                userview.Email = user.Email;
+                return View("logonsuccess", userview);
+            }
+            else return View("logonerror");
         }
         [HttpGet("/NewRoom")]
         public IActionResult CreateRoom(string username)
@@ -30,13 +58,13 @@ namespace VideoShare.Client.Controllers
             Room room = _repo.GetRoom(RoomId);
             room.Party.Add(user);
 
-            return View();
+            return View("Room");
         }
         [HttpPost("/room/video")]
         public IActionResult ReturnVideos(string videosearch)
         {
             UserViewModel userview = new UserViewModel();
-        //    userview.VideoSearch = _repo.GetVideos(videosearch);
+            userview.VideoSearch = _repo.GetVideos(videosearch);
 
             return View("SelectVideo", userview);
         }
