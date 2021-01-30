@@ -21,6 +21,7 @@ namespace StoringApi.Service.Models
             Party = new List<User>();
             Host = Party.FirstOrDefault(); //Move to user and if user is host also not mapped
             RoomChat = new ChatBox();
+            IsActive = true;
         }
 
         public bool AddViewer(User user)

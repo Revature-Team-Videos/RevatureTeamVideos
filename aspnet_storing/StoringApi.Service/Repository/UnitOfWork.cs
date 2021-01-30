@@ -35,9 +35,9 @@ namespace StoringApi.Service.Repository
       _room.AddUserToRoom(roomid, user);
     }
 
-    public void CloseRoom(long id)
+    public bool CloseRoom(long id)
     {
-      _room.CloseRoom(id);
+      return _room.CloseRoom(id);
     }
 
     public bool EmailOrUsernameExists(string username, string email)

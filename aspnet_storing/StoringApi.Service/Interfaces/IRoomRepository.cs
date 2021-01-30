@@ -15,6 +15,6 @@ namespace StoringApi.Service.Interfaces
 
     public void RemoveUserFromRoom(long roomid, User user);
 
-    public void CloseRoom(long id);
+    public bool CloseRoom(long id);
   }
 }

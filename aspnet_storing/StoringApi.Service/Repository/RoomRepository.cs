@@ -31,7 +31,7 @@ namespace StoringApi.Service.Repository
       }
     }
 
-    public void CloseRoom(long id)
+    public bool CloseRoom(long id)
     {
       var theRoom = GetRoom(id);
       
@@ -39,7 +39,10 @@ namespace StoringApi.Service.Repository
       {
         theRoom.CloseRoom();
         _context.SaveChanges();
+        return true;
       }
+
+      return false;
     }
 
     public ChatBox GetChat(long roomid)
