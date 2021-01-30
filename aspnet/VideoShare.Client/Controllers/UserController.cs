@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using VideoShare.Client.Models;
@@ -51,7 +52,7 @@ namespace VideoShare.Client.Controllers
             
             return View("VideoSearch");
         }
-        [HttpPost("/Room")]
+        [HttpPost("/room")]
         public IActionResult JoinRoom(string RoomId, string username)
         {
             User user = _repo.GetUser(username);
@@ -76,6 +77,14 @@ namespace VideoShare.Client.Controllers
 
             return View("Video", userview);
         }
+        [HttpGet("/user")]
+        public IActionResult GetProfile()
+        {
+            UserViewModel userview = new UserViewModel();
+            User user = _repo.GetUser(username);
+            userview.Friends = _repo.GetFriends(username);
 
+            return View("profile", userview);
+        }
     }
 }
