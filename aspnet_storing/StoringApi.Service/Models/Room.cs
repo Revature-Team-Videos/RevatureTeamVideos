@@ -23,6 +23,39 @@ namespace StoringApi.Service.Models
             RoomChat = new ChatBox();
         }
 
+        public bool AddViewer(User user)
+        {
+            bool userExist = false;
+            
+            foreach(var viewer in Party)
+            {
+                if(user.Username == viewer.Username)
+                {
+                    userExist = true;
+                }
+            }
+
+            if(!userExist && Party.Count <= 5)
+            {
+                Party.Add(user);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool RemoveViewer(User user)
+        {
+            return Party.Remove(user);
+        }
+
+        public void CloseRoom()
+        {
+            Host = null;
+            Party = new List<User>();
+            IsActive = false;
+        }
+
         public void DeleteMessage(string username, int messageindex)
         {
             if(Host != null && Host.Username == username)
