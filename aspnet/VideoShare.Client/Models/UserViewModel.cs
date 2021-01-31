@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using VideoShare.Domain.Models;
 
 namespace VideoShare.Client.Models
 {
@@ -10,5 +9,6 @@ namespace VideoShare.Client.Models
         public VideoViewModel VideoView { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
+        public List<string> Friends { get; set; }
     }
 }
