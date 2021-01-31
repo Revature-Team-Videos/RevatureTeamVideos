@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as base
+
+WORKDIR /twitchspace
+COPY aspnet_twitch .
+RUN dotnet build
+RUN dotnet publish -c Release -o out TwitchApi.Service/TwitchApi.Service.csproj
+
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+
+WORKDIR /publish
+COPY --from=base twitchspace/out .
+CMD ["dotnet", "TwitchApi.Service.dll"]
