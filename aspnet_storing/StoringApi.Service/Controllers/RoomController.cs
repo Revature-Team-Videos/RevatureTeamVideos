@@ -62,6 +62,7 @@ namespace StoringApi.Service.Controllers
 
       if(closed)
       {
+        _context.Save();
         return Ok();
       }
 
