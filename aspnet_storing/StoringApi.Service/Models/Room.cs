@@ -15,11 +15,12 @@ namespace StoringApi.Service.Models
         public ChatBox RoomChat { get; set; }
 
         public bool IsActive { get; set; }
+
+        public string VideoUrl { get; set; }
         
         public Room()
         {
             Party = new List<User>();
-            Host = Party.FirstOrDefault(); //Move to user and if user is host also not mapped
             RoomChat = new ChatBox();
             IsActive = true;
         }

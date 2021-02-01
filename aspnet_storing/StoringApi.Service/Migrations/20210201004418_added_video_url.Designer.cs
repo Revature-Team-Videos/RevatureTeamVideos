@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoringApi.Service;
 
 namespace StoringApi.Service.Migrations
 {
     [DbContext(typeof(VWFContext))]
-    partial class VWFContextModelSnapshot : ModelSnapshot
+    [Migration("20210201004418_added_video_url")]
+    partial class added_video_url
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

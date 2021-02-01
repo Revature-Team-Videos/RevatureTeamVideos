@@ -14,12 +14,26 @@ namespace VideoShare.Client.Controllers
         private string storeapiUrl = "http://localhost:7500";
         private string twitchapiUrl = "http://localhost:8000";
         private HttpClient _http = new HttpClient();
-        [HttpGet]
+
+        [HttpGet("")]
         public IActionResult Home()
         {
-
             return View("Home");
         }
+
+        [HttpPost("/main")]
+        public async Task<IActionResult> CreateOrLogin(string username, string email, string button)
+        {
+            if(button == "login")
+            {
+                return await Login(username);
+            }
+            else
+            {
+                return await CreateAccount(username, email);
+            }
+        }
+
         [HttpPost("/CreateAccount")]
         public async Task<IActionResult> CreateAccount(string username, string email)
         {
@@ -32,43 +46,38 @@ namespace VideoShare.Client.Controllers
             var response = await _http.PostAsync(responseurl, httpcontent);
             if (response.IsSuccessStatusCode)
             {
-                return View("logon", userview);
+                //ADD temp data to state login successful
             }
-            return View ("error");
+            else
+            {
+                //ADD temp data for state create fail
+            }
 
+            return View("Home", userview);
         }
-        [HttpPost("/Login")]
-        public async Task<IActionResult> Login(string Username)
+
+        [HttpGet("/Login")]
+        public async Task<IActionResult> Login(string username)
         {
             UserViewModel userview = new UserViewModel(); 
-            var response = await _http.GetAsync(storeapiUrl + "/users/username/" + Username);
+            var response = await _http.GetAsync(storeapiUrl + "/users/username/" + username);
             if (response.IsSuccessStatusCode)
             {
-                var content = JsonConvert.DeserializeObject<UserViewModel> (await response.Content.ReadAsStringAsync());
+                var json = await response.Content.ReadAsStringAsync();
+
+                var content = JsonConvert.DeserializeObject<UserViewModel> (json);
                 userview.Username = content.Username;
                 userview.Email = content.Email;
                 TempData.Put<UserViewModel>("userview", userview);
 
-                return View("logonsuccess", userview);
+                //return View("Room", userview);
+                return RedirectToAction("MainMenu", "Menu", userview);
             }
-            else return View("logonerror");
+
+            //ADD temp data
+            return View("Home"); 
         }
-        [HttpGet("/NewRoom")]
-        public async Task<IActionResult> CreateRoom()
-        {
-            UserViewModel userview = TempData.Get<UserViewModel>("userview");
-            TempData.Keep();
-            var model = await Task.Run(() => JsonConvert.SerializeObject(userview));
-            var httpcontent = new StringContent(model, Encoding.UTF8, "application/json");
-            var response = await _http.PostAsync(storeapiUrl + "/createroom", httpcontent);
-            if (response.IsSuccessStatusCode)
-            {
-                RoomViewModel roomview = new RoomViewModel();
-                roomview.Host = userview;
-                return View("VideoSearch");
-            }
-            else return View("error");
-        }
+        
         [HttpPost("/room")]
         public async Task<IActionResult> JoinRoom(string roomid)
         {
@@ -91,6 +100,7 @@ namespace VideoShare.Client.Controllers
             else return View("error");
             
         }
+        
         [HttpPost("/room/videos")]
         public async Task<IActionResult> ReturnVideos(string videosearch)
         {
@@ -106,6 +116,7 @@ namespace VideoShare.Client.Controllers
             }
             return View("error");            
         }
+        
         [HttpPost("/room/video/{videoid}")]
         public async Task<IActionResult> SelectVideo(string videoid)
         {
@@ -121,7 +132,8 @@ namespace VideoShare.Client.Controllers
             }
             return View("error"); 
         }
-        [HttpGet("/user")]
+        
+        [HttpGet("/profile")]
         public async Task<IActionResult> GetProfile(string username)
         {
             var response = await _http.GetAsync(storeapiUrl +"/users/username/" + username);

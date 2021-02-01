@@ -1,0 +1,35 @@
+@model VideoShare.Client.Models.UserViewModel
+
+@* <iframe
+    src="https://player.twitch.tv/?&channel=RanbooLive&parent=localhost"
+    height="50%"
+    width="50%"
+    allowfullscreen="true">
+</iframe> *@
+
+<div class="jumbotron jumbotron-fluid bg-dark">
+
+    <div class="jumbotron-background">
+        @* <img src="https://www.pcgamesn.com/wp-content/uploads/2020/12/rocket-league-season-2.jpg" class="blur "> *@
+    </div>
+
+    <div class="container text-white">
+
+        <h1 class="display-4">Hello, @Model.Username!</h1>
+        <hr class="my-4">
+
+        <form asp-action="CreateRoom" asp-controller="menu" asp-antiforgery="true" method="GET">
+            <div class="form-group">
+                <button class="btn btn-light" type="submit">Create Room</button>
+            </div>
+        </form>
+        <p class="lead"> If you have a session number, please put it below and click Join.</p>
+        <form asp-action="JoinRoom" asp-controller="user" asp-antiforgery="true" method="POST">
+            <input type="text" name="RoomID" id="RoomID">
+            <button class="btn btn-light" type="submit">Join Room</button>
+        </form>
+
+    </div>
+
+</div>
+

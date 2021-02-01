@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace VideoShare.Client.Models
 {
-  public class StreamsViewModel
+  public class StreamViewModel
   {
     public IEnumerable<StreamItem> data { get; set; }
   }

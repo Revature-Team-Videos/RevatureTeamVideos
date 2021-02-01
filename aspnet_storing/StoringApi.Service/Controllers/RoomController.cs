@@ -7,6 +7,7 @@ using StoringApi.Service.Repository;
 namespace StoringApi.Service.Controllers
 {
   [ApiController]
+  [Produces("application/json")]
   [Route("[controller]")]
   public class RoomController : ControllerBase
   {
@@ -52,6 +53,46 @@ namespace StoringApi.Service.Controllers
       }
 
       return NotFound(null);
+    }
+
+    [Route("/rooms/open/")]
+    [HttpPost]
+    public IActionResult OpenRoom(OpenRoom data)
+    {
+      var user = _context.GetUserByUsername(data.Username);
+
+      if(user == null)
+      {
+        return Unauthorized();
+      }
+
+      var room = new Room();
+      room.Party.Add(user);
+      room.Host = room.Party.FirstOrDefault();
+      room.VideoUrl = data.VideoUrl;
+
+      _context.Add(room);
+      return Ok(room);
+    }
+
+    [Route("/rooms/open/{username}/{channel}")]
+    [HttpPost]
+    public IActionResult OpenRoom(string username, string channel)
+    {
+      var user = _context.GetUserByUsername(username);
+
+      if(user == null)
+      {
+        return Unauthorized();
+      }
+      
+      var room = new Room();
+      room.Party.Add(user);
+      room.Host = room.Party.FirstOrDefault();
+      room.VideoUrl = $"https://player.twitch.tv/?&channel={channel}&parent=localhost";
+
+      _context.Add(room);
+      return Ok(room);
     }
 
     [Route("/rooms/{id}/close")]
