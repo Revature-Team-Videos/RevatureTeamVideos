@@ -45,7 +45,10 @@ namespace VideoShare.Client.Controllers
 
         var room = JsonConvert.DeserializeObject<RoomViewModel>(json);
 
-        return View("ViewingRoom", room);
+        return View("ViewingRoom", new EnterRoomViewModel() {
+          Room = room,
+          User = userview
+        });
 
       }
       else return View("error");
@@ -93,9 +96,12 @@ namespace VideoShare.Client.Controllers
         if (response.IsSuccessStatusCode)
         {
           var json = await response.Content.ReadAsStringAsync();
-          var content = JsonConvert.DeserializeObject<RoomViewModel>(json);
+          var room = JsonConvert.DeserializeObject<RoomViewModel>(json);
 
-          return View("ViewingRoom", content);
+          return View("ViewingRoom", new EnterRoomViewModel() {
+            Room = room,
+            User = userview
+          });
         }
         return View("error");
     }
@@ -109,7 +115,7 @@ namespace VideoShare.Client.Controllers
       var response = await _http.PostAsync(storeapiUrl + $"/rooms/{id}/close", null);
       if(response.IsSuccessStatusCode)
       {
-        return View("Room", userview);
+        return RedirectToAction("MainMenu", userview);
       }
 
       return View();
