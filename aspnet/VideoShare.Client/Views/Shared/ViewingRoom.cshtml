@@ -1,11 +1,11 @@
-@model VideoShare.Client.Models.RoomViewModel
+@model VideoShare.Client.Models.EnterRoomViewModel
 
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-md-6">
       @{
         <iframe
-          src=@Model.VideoUrl
+          src=@Model.Room.VideoUrl
           height="500"
           width="100%"
           allowfullscreen="true">
@@ -14,9 +14,12 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <form asp-action="closeroom" asp-controller="menu" asp-antiforgery="true" method="POST">
-        <button type="submit" name="id" value=@Model.EntityID>Close</button>
+        <button type="submit" name="id" value=@Model.Room.EntityID>Close</button>
       </form>
-      Chatbox Here
+      <form asp-action="mainmenu" asp-controller="menu" method="GET">
+        <button type="submit">Leave</button>
+      </form>
+      @await Html.PartialAsync("ChatBox", @Model.User)
     </div>
   </div>
 </div>
