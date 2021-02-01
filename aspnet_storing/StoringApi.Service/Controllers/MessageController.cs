@@ -5,6 +5,7 @@ using StoringApi.Service.Repository;
 namespace StoringApi.Service.Controllers
 {
   [ApiController]
+  [Produces("application/json")]
   [Route("[controller]")]
   public class MessageController : ControllerBase
   {

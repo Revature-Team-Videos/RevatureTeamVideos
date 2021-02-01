@@ -1,0 +1,32 @@
+@model VideoShare.Client.Models.StreamListViewModel
+
+@foreach(var item in @Model.Streams.data)
+{
+  <div class="container">
+    <div class="card">
+      <div class="row">
+        <div class="col-xs-2"></div>
+        @{
+          var link = @item.thumbnail_url.Replace("{width}", "150").Replace("{height}", "150");
+          <div class="col-xs-3">
+            <img src=@link alt=@item.title class="img-fluid">
+          </div>
+        }
+        <div class="card-body col-xs-7">
+          <h5>@item.title</h5>
+          <h5>Channel: @item.user_name</h5>
+          <h5>Game: @item.game_name</h5>
+          <form asp-action="createroom" asp-controller="menu" asp-antiforgery="true" method="POST">
+            <button
+              type="submit" 
+              class="btn btn-danger m-2" 
+              name="channel"
+              value=@item.user_name>
+                Create Room
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+}
