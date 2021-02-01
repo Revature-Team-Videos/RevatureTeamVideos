@@ -1,0 +1,22 @@
+@model VideoShare.Client.Models.RoomViewModel
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      @{
+        <iframe
+          src=@Model.VideoUrl
+          height="500"
+          width="100%"
+          allowfullscreen="true">
+        </iframe>
+      }
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <form asp-action="closeroom" asp-controller="menu" asp-antiforgery="true" method="POST">
+        <button type="submit" name="id" value=@Model.EntityID>Close</button>
+      </form>
+      Chatbox Here
+    </div>
+  </div>
+</div>

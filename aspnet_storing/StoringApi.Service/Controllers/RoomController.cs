@@ -72,6 +72,7 @@ namespace StoringApi.Service.Controllers
       room.VideoUrl = data.VideoUrl;
 
       _context.Add(room);
+      _context.Save();
       return Ok(room);
     }
 
@@ -92,6 +93,7 @@ namespace StoringApi.Service.Controllers
       room.VideoUrl = $"https://player.twitch.tv/?&channel={channel}&parent=localhost";
 
       _context.Add(room);
+      _context.Save();
       return Ok(room);
     }
 

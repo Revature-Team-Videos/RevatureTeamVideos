@@ -16,6 +16,8 @@ namespace VideoShare.Client.Models
 
     public string game_id { get; set; }
 
+    public string game_name { get; set; }
+
     public string type { get; set; }
 
     public string title { get; set; }

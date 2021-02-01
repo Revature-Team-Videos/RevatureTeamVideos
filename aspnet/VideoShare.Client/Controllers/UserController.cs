@@ -12,7 +12,6 @@ namespace VideoShare.Client.Controllers
     public class UserController : Controller
     {   
         private string storeapiUrl = "http://localhost:7500";
-        private string twitchapiUrl = "http://localhost:8000";
         private HttpClient _http = new HttpClient();
 
         [HttpGet("")]
@@ -78,29 +77,6 @@ namespace VideoShare.Client.Controllers
             return View("Home"); 
         }
         
-        [HttpPost("/room")]
-        public async Task<IActionResult> JoinRoom(string roomid)
-        {
-            var response = await _http.GetAsync(storeapiUrl + "/rooms/" + roomid);
-            if (response.IsSuccessStatusCode)
-            {
-                var content = JsonConvert.DeserializeObject<RoomViewModel> (await response.Content.ReadAsStringAsync());
-                RoomViewModel roomview = new RoomViewModel();
-                roomview.RoomId = roomid;
-                UserViewModel userview = TempData.Get<UserViewModel>("userview");
-                var model = await Task.Run(() => JsonConvert.SerializeObject(userview));
-                var httpcontent = new StringContent(model, Encoding.UTF8, "application/json");
-                var response2 = await _http.PostAsync(storeapiUrl + "/rooms/" + roomid + "/" + userview.Username, httpcontent);
-                if (response2.IsSuccessStatusCode)
-                {
-                    return View ("room");
-                }
-                return View("Error");
-            }
-            else return View("error");
-            
-        }
-        
         [HttpPost("/room/videos")]
         public async Task<IActionResult> ReturnVideos(string videosearch)
         {
@@ -142,7 +118,6 @@ namespace VideoShare.Client.Controllers
                 var content = JsonConvert.DeserializeObject<UserViewModel> (await response.Content.ReadAsStringAsync());
                 UserViewModel userview = new UserViewModel();
                 userview.Email = content.Email;
-                userview.Friends = content.Friends;
                 userview.Username = content.Username;
                 
                 return View("profile", userview);
