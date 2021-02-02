@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StoringApi.Service\StoringApi.Service.csproj" />
+    <ProjectReference Include="..\VideoShare.Client\VideoShare.Client.csproj" />
   </ItemGroup>
 
 </Project>
