@@ -2,6 +2,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TwitchApi.Service.Models;
 
 namespace TwitchApi.Service.Controllers
@@ -10,17 +11,20 @@ namespace TwitchApi.Service.Controllers
   [Route("[controller]")]
   public class TwitchController : ControllerBase
   {
-    private string oauth_path = "https://id.twitch.tv/oauth2/token?client_id=bqytuqgi8nc9hqoyzxp358hk4oiw8f&client_secret=fp41o28u9xi9uxkgcgx5f5hx5pjgo3&grant_type=client_credentials";
-
-    private string _clientId = "bqytuqgi8nc9hqoyzxp358hk4oiw8f";
-
     private HttpClient _http = new HttpClient();
+
+    private readonly IConfiguration _config;
+
+    public TwitchController(IConfiguration configuration)
+    {
+      _config = configuration;
+    }
 
     [Route("/topstreams")]
     [HttpGet]
     public async Task<IActionResult> GetStreams()
     {
-      var response = await _http.PostAsync(oauth_path, null);
+      var response = await _http.PostAsync(GetAuthPath(), null);
 
       if(!response.IsSuccessStatusCode)
       {
@@ -33,9 +37,9 @@ namespace TwitchApi.Service.Controllers
       var secondHttp = new HttpClient();
       secondHttp.DefaultRequestHeaders.Authorization =
        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", auth.access_token);
-      secondHttp.DefaultRequestHeaders.Add("Client-Id", _clientId);
-      //System.Console.WriteLine(secondHttp.DefaultRequestHeaders.ToString());
-      var streams_response = await secondHttp.GetAsync("https://api.twitch.tv/helix/streams?first=5");
+      secondHttp.DefaultRequestHeaders.Add("Client-Id", _config["twitch_client"]);
+
+      var streams_response = await secondHttp.GetAsync("https://api.twitch.tv/helix/streams?first=10");
       
       if(!streams_response.IsSuccessStatusCode)
       {
@@ -51,7 +55,7 @@ namespace TwitchApi.Service.Controllers
     [HttpGet]
     public async Task<IActionResult> GetVideo(string id)
     {
-      var response = await _http.PostAsync(oauth_path, null);
+      var response = await _http.PostAsync(GetAuthPath(), null);
 
       if(!response.IsSuccessStatusCode)
       {
@@ -64,11 +68,9 @@ namespace TwitchApi.Service.Controllers
       var secondHttp = new HttpClient();
       secondHttp.DefaultRequestHeaders.Authorization =
        new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", auth.access_token);
-      secondHttp.DefaultRequestHeaders.Add("Client-Id", _clientId);
-      //System.Console.WriteLine(secondHttp.DefaultRequestHeaders.ToString());
-      //System.Console.WriteLine(id);
+      secondHttp.DefaultRequestHeaders.Add("Client-Id", _config["twitch_client"]);
+
       var videoUrl = "https://api.twitch.tv/helix/videos?user_id=" + id + "?first=1";
-      //System.Console.WriteLine(videoUrl);
       var video_response = await secondHttp.GetAsync(videoUrl);
       
       if(!video_response.IsSuccessStatusCode)
@@ -85,7 +87,7 @@ namespace TwitchApi.Service.Controllers
     [HttpPost]
     public async Task<IActionResult> TestMe()
     {
-      var response = await _http.PostAsync(oauth_path, null);
+      var response = await _http.PostAsync(GetAuthPath(), null);
 
       if(response.IsSuccessStatusCode)
       {
@@ -94,6 +96,15 @@ namespace TwitchApi.Service.Controllers
       }
 
       return Unauthorized(null);
+    }
+
+    private string GetAuthPath()
+    {
+      var client = _config["twitch_client"];
+      var secret = _config["twitch_secret"];
+      var oauth_path = $"https://id.twitch.tv/oauth2/token?client_id={client}&client_secret={secret}&grant_type=client_credentials";
+      
+      return oauth_path;
     }
   }
 }
