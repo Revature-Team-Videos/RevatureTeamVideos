@@ -59,69 +59,14 @@
         <div class="row py-5 mt-4 align-items-center">
             <!-- For Demo Purpose -->
             <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
-                <img src="https://flepikino.com/wp-content/uploads/2020/08/Top-10-Video-Games-Flepikino.jpg" alt="" class="img-fluid mb-3 d-none d-md-block">
+                <img src="https://flepikino.com/wp-content/uploads/2020/08/Top-10-Video-Games-Flepikino.jpg" alt="" class="img-fluid  mb-3 d-none d-md-block">
                 <h2> Watch Videos Together</h2>
                 <p class="font-italic text-muted mb-0"> Friends can watch videos together, no matter where they are in the world. </p>
                 <p class="font-italic text-muted">By Zach Sanders, Jim Phan and Yichen Liu  </p>
             </div>
-
-            <!-- Registeration Form -->
-            <div class="col-md-7 col-lg-6 ml-auto">
-                <form asp-action="createorlogin" asp-controller="user" method="POST">
-                    <div class="row">
-                        <div class="input-group col-lg-12 mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                    <i class="fa fa-user text-muted"></i>
-                                </span>
-                            </div>
-                            <input id="username" type="text" name="username" placeholder="User Name" class="form-control bg-white border-left-0 border-md">
-                        </div>
-
-                        <!-- Email Address -->
-                        <div class="input-group col-lg-12 mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-white px-4 border-md border-right-0">
-                                    <i class="fa fa-envelope text-muted"></i>
-                                </span>
-                            </div>
-                            <input id="email" type="email" name="email" placeholder="Email Address" class="form-control bg-white border-left-0 border-md">
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="form-group col-lg-8 mx-auto mb-0">
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-block py-2"
-                                name="button"
-                                value="create"
-                            >
-                                Create your account
-                            </button>
-                        </div>
-
-                        <!-- Divider Text -->
-                        <div class="form-group col-lg-8 mx-auto d-flex align-items-center my-4">
-                            <div class="border-bottom w-100 ml-5"></div>
-                            <span class="px-2 small text-muted font-weight-bold text-muted">OR</span>
-                            <div class="border-bottom w-100 mr-5"></div>
-                        </div>
-
-                      
-                        <div class="form-group col-lg-8 mx-auto">
-                            <button
-                                type="submit"
-                                class="btn btn-primary btn-block py-2"
-                                name="button"
-                                value="login"
-                            >
-                                Login
-                            </button>
-
-                            <!-- Already Registered -->
-
-                        </div>
-                    </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <form asp-controller="account" asp-action="signin" method="GET">
+                    <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
                 </form>
             </div>
         </div>

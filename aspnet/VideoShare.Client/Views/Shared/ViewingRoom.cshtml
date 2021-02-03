@@ -13,12 +13,18 @@
       }
     </div>
     <div class="col-xs-12 col-md-6">
-      <form asp-action="closeroom" asp-controller="menu" asp-antiforgery="true" method="POST">
-        <button type="submit" name="id" value=@Model.Room.EntityID>Close</button>
-      </form>
-      <form asp-action="mainmenu" asp-controller="menu" method="GET">
-        <button type="submit">Leave</button>
-      </form>
+      <div class="row">
+        <div class="col-xs-6 m-6">
+          <form asp-action="closeroom" asp-controller="menu" asp-antiforgery="true" method="POST">
+            <button type="submit" name="id" value=@Model.Room.EntityID class="btn btn-primary">Close</button>
+          </form>
+        </div>
+        <div class="col-xs-6 m-6">
+          <form asp-action="mainmenu" asp-controller="menu" method="GET">
+            <button type="submit" class="btn btn-primary">Leave</button>
+          </form>
+        </div>
+      </div>
       @await Html.PartialAsync("ChatBox", @Model.User)
     </div>
   </div>

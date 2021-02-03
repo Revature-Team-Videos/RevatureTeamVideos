@@ -13,6 +13,25 @@
             <div class="container">
                 <a class="navbar-brand">Videos With Friends</a>
             </div>
+            <div class="container">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <p class="navbar-text">Hello, @User.Identity.Name</p>
+                    <div class="nav-item">
+                        <form asp-controller="account" asp-action="signoff" method="POST">
+                            <button type="submit" class="btn btn-light">Sign Out</button>
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <div class="nav-item">
+                        <form asp-controller="account" asp-action="signin" method="GET">
+                            <button type="submit" class="btn btn-light">Sign In</button>
+                        </form>
+                    </div>
+                }
+            </div>
         </nav>
     </header>
     <div class="container">
