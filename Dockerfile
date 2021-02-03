@@ -1,12 +1,12 @@
-FROM mcr.microsoft.com/dotnet/sdk as base
+FROM mcr.microsoft.com/dotnet/sdk:5.0 as base
 
 WORKDIR /workspace
 COPY aspnet .
-RUN dotnet build -c Release
-RUN dotnet publish -c Release -o out VideoShare.Client/*.csproj
+RUN dotnet build
+RUN dotnet publish -c Release -o out VideoShare.Client/VideoShare.Client.csproj
 
-FROM mcr.microsoft.com/dotnet/aspnet
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
 
-WORKDIR /workspace
-COPY --from=base out .
+WORKDIR /publish
+COPY --from=base workspace/out .
 CMD ["dotnet", "VideoShare.Client.dll"]
