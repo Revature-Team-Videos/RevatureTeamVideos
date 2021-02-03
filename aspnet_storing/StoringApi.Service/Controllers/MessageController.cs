@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using StoringApi.Service.Models;
 using StoringApi.Service.Repository;
@@ -20,6 +21,7 @@ namespace StoringApi.Service.Controllers
     [Route("/messages/users")]
     [HttpGet]
     [Authorize]
+    [EnableCors("AllowAll")]
     public IActionResult GetMessagesByUser(User user)
     {
       var messages = _context.GetMessagesByUser(user);
@@ -30,6 +32,7 @@ namespace StoringApi.Service.Controllers
     [Route("/messages/chatid/{id}")]
     [HttpGet]
     [Authorize]
+    [EnableCors("AllowAll")]
     public IActionResult GetMessagesByUser(long id)
     {
       var messages = _context.GetMessagesByChatID(id);

@@ -57,6 +57,15 @@ namespace StoringApi.Service
             services.AddAuthorization();
 
             services.AddScoped<UnitOfWork>();
+            services.AddCors(options =>
+            {
+                // The CORS policy is open for testing purposes. In a production application, you should restrict it to known origins.
+                options.AddPolicy(
+                    "AllowAll",
+                    builder => builder.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
