@@ -1,30 +1,57 @@
 @model VideoShare.Client.Models.UserViewModel
+<style>
+    body {
+        overflow: hidden;
+        background: #f2f2f2;
+    }
 
-<div class="container">
+    .chatbox {
+        font-weight: bold;
+        font-size: 19px;
+        padding: 10px;
+        border: 5px #6495ED;
+        color: #6495ED;
+        margin: 0;
+    }
+
+    .scrollbox {
+        overflow-y: scroll;
+        height: 200px;
+        width: 100%;
+        overflow-wrap: break-word;
+    }
+</style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<div class="w3-container m-0">
     <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2"><span>Username: </span><span id="userInput">@Model.Username</span></div>        
+    <div class="row" hidden>
+        <div class="col-2"><label class="w3-text-blue"><b>User Name</b></label><span id="userInput">@Model.Username</span></div>
     </div>
-    <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
+    <div class="row">&nbsp;</div>
+    <div class="w3-input">
+        <label class="w3-text-blue"><b>Message</b></label>
+        <input class="w3-input w3-border" id="messageInput" type="text"></p>
     </div>
     <div class="row">&nbsp;</div>
     <div class="row">
         <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
+            <input type="button" class="btn btn-primary" id="sendButton" value="Send Message" />
         </div>
     </div>
+
 </div>
 <div class="row">
     <div class="col-12">
         <hr />
     </div>
 </div>
-<div class="row">
+
+<div class="chatbox scrollbox">
     <div class="col-6">
         <ul id="messagesList"></ul>
     </div>
 </div>
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/chat.js"></script>

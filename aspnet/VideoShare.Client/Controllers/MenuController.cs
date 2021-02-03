@@ -1,24 +1,30 @@
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using VideoShare.Client.Models;
 
 namespace VideoShare.Client.Controllers
 {
+  [Authorize]
   [Route("[controller]")]
   public class MenuController : Controller
   {
-    private string storeapiUrl = "http://localhost:7500";
-    private string twitchapiUrl = "http://localhost:8000";
+    private readonly IConfiguration _config;
     private HttpClient _http = new HttpClient();
+
+    public MenuController(IConfiguration config)
+    {
+      _config = config;
+    }
 
     [HttpGet("/MainMenu")]
     public async Task<IActionResult> MainMenu(UserViewModel user)
     {
-      var response = await _http.GetAsync(storeapiUrl + "/rooms/list/true");
+      var response = await _http.GetAsync(_config["storeAPIURL"] + "/rooms/list/true");
       var mainModel = new MainMenuViewModel();
       mainModel.User.Username = user.Username;
 
@@ -38,7 +44,7 @@ namespace VideoShare.Client.Controllers
       UserViewModel userview = TempData.Get<UserViewModel>("userview");
       TempData.Keep();
 
-      var response = await _http.PostAsync(storeapiUrl + $"/rooms/open/{userview.Username}/{channel}", null);
+      var response = await _http.PostAsync(_config["storeAPIURL"] + $"/rooms/open/{userview.Username}/{channel}", null);
       if (response.IsSuccessStatusCode)
       {
         var json = await response.Content.ReadAsStringAsync();
@@ -59,7 +65,7 @@ namespace VideoShare.Client.Controllers
     {
       if(button == "create")
       {
-        var response = await _http.GetAsync(twitchapiUrl + "/topstreams");
+        var response = await _http.GetAsync(_config["twitchAPIURL"] + "/topstreams");
 
         if(!response.IsSuccessStatusCode)
         {
@@ -92,7 +98,7 @@ namespace VideoShare.Client.Controllers
     {
         UserViewModel userview = TempData.Get<UserViewModel>("userview");
         TempData.Keep();
-        var response = await _http.PostAsync(storeapiUrl + $"/rooms/adduser/{roomid}/{userview.Username}", null);
+        var response = await _http.PostAsync(_config["storeAPIURL"] + $"/rooms/adduser/{roomid}/{userview.Username}", null);
         if (response.IsSuccessStatusCode)
         {
           var json = await response.Content.ReadAsStringAsync();
@@ -112,7 +118,7 @@ namespace VideoShare.Client.Controllers
       UserViewModel userview = TempData.Get<UserViewModel>("userview");
       TempData.Keep();
 
-      var response = await _http.PostAsync(storeapiUrl + $"/rooms/{id}/close", null);
+      var response = await _http.PostAsync(_config["storeAPIURL"] + $"/rooms/{id}/close", null);
       if(response.IsSuccessStatusCode)
       {
         return RedirectToAction("MainMenu", userview);
