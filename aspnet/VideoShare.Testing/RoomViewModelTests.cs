@@ -17,10 +17,10 @@ namespace VideoShare.Testing
         private void Test_GetChannelName()
         {
             RoomViewModel test = new RoomViewModel();
-            test.VideoUrl = "http://player.twitch.tv/?&channel=Jack&parent=localhost";
-            var ChannelName = test.GetChannelName();
+            test.VideoUrl = "https://player.twitch.tv/?&channel=Jack&parent=localhost";
+            string ChannelName = test.GetChannelName().Trim();
 
-            Assert.Same(ChannelName, "Jack");
+            Assert.Equal("Jack", ChannelName);
         }
     }
 }
