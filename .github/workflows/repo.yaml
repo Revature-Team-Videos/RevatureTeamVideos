@@ -1,10 +1,10 @@
 defaults:
   run:
-    working-directory: aspnet_yaml
+    working-directory: aspnet_storing
 
 jobs:
   build:
-    name: building_yaml
+    name: building_storing
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
