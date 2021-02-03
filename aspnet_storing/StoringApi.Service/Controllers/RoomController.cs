@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoringApi.Service.Models;
 using StoringApi.Service.Repository;
@@ -57,6 +58,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/rooms/open/")]
     [HttpPost]
+    [Authorize]
     public IActionResult OpenRoom(OpenRoom data)
     {
       var user = _context.GetUserByUsername(data.Username);
@@ -78,6 +80,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/rooms/open/{username}/{channel}")]
     [HttpPost]
+    [Authorize]
     public IActionResult OpenRoom(string username, string channel)
     {
       var user = _context.GetUserByUsername(username);
@@ -99,6 +102,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/rooms/{id}/close")]
     [HttpPost]
+    [Authorize]
     public IActionResult CloseRoom(long id)
     {
       var closed = _context.CloseRoom(id);
@@ -114,6 +118,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/rooms/removeuser/{id}/{username}")]
     [HttpPost]
+    [Authorize]
     public IActionResult RemoveUser(long id, string username)
     {
       var user = _context.GetUserByUsername(username);
@@ -132,6 +137,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/rooms/adduser/{id}/{username}")]
     [HttpPost]
+    [Authorize]
     public IActionResult AddUser(long id, string username)
     {
       var user = _context.GetUserByUsername(username);

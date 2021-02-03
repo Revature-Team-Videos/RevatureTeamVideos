@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoringApi.Service.Models;
 using StoringApi.Service.Repository;
@@ -57,6 +58,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/users/add")]
     [HttpPost]
+    [Authorize]
     public IActionResult AddUser(User user)
     {
       var emailusernameExists = _context.EmailOrUsernameExists(user.Username, user.Email);
