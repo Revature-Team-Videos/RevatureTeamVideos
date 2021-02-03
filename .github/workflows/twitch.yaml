@@ -1,0 +1,41 @@
+defaults:
+  run:
+    working-directory: aspnet_twitch
+
+jobs:
+  build:
+    name: building_twitch
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: dotnet restore
+      - run: dotnet build
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: dotnet test
+
+  pack:
+    needs:
+      - build
+      - test
+    runs-on: ubuntu-20.04
+    env:
+      DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+      DOCKER_USER: ${{ secrets.DOCKER_USER }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
+      - run: docker image build -f ../dockerfiles/twitchapi/dockerfile -t twitchapi ..
+      - run: docker image tag twitchapi videoswithfriends/twitchapi:v1
+      - run: docker push videoswithfriends/twitchapi:v1
+      - run: docker logout
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main

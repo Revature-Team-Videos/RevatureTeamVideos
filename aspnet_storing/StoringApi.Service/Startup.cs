@@ -38,7 +38,7 @@ namespace StoringApi.Service
 
             services.AddDbContext<VWFContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("sqlServer"), opts =>
+                options.UseSqlServer(Configuration["sqlServer"], opts =>
                 {
                     opts.EnableRetryOnFailure(2);
                 });
@@ -82,7 +82,7 @@ namespace StoringApi.Service
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

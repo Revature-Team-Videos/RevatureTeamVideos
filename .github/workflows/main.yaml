@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
-      - run: docker image build -f ../dockerfile -t videoshare ..
+      - run: docker image build -f ../Dockerfile -t videoshare ..
       - run: docker image tag videoshare videoswithfriends/revature-videoswithfriends:v0
       - run: docker push videoswithfriends/revature-videoswithfriends:v0
       - run: docker logout
@@ -51,4 +51,7 @@ jobs:
 on:
   push:
     branches:
-      - master
+      - main
+  pull_request:
+    branches:
+      - main
