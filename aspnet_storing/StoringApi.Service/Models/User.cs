@@ -1,5 +1,3 @@
-
-using System.Collections.Generic;
 using StoringApi.Abstracts;
 
 namespace StoringApi.Service.Models

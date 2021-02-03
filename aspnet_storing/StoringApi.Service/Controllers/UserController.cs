@@ -1,5 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using StoringApi.Service.Models;
 using StoringApi.Service.Repository;
@@ -20,6 +22,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/users")]
     [HttpGet]
+    [EnableCors("AllowAll")]
     public async Task<IActionResult> Get()
     {
       var users = _context.GetAll<User>().ToList();
@@ -29,6 +32,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/users/username/{username}")]
     [HttpGet]
+    [EnableCors("AllowAll")]
     public IActionResult GetUserName(string username)
     {
       var user = _context.GetUserByUsername(username);
@@ -43,6 +47,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/users/email/{email}")]
     [HttpGet]
+    [EnableCors("AllowAll")]
     public IActionResult GetUserEmail(string email)
     {
       var user = _context.GetUserByEmail(email);
@@ -57,6 +62,8 @@ namespace StoringApi.Service.Controllers
 
     [Route("/users/add")]
     [HttpPost]
+    [Authorize]
+    [EnableCors("AllowAll")]
     public IActionResult AddUser(User user)
     {
       var emailusernameExists = _context.EmailOrUsernameExists(user.Username, user.Email);
@@ -78,6 +85,7 @@ namespace StoringApi.Service.Controllers
 
     [Route("/users/testme")]
     [HttpPost]
+    [EnableCors("AllowAll")]
     public IActionResult Test(User user)
     {
       return Ok(user);
