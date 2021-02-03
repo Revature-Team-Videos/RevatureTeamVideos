@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Okta.AspNetCore;
 using StoringApi.Service.Repository;
 
 namespace StoringApi.Service
@@ -35,11 +36,25 @@ namespace StoringApi.Service
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "StoringApi.Service", Version = "v1" });
             });
 
-            services.AddDbContext<VWFContext>(options =>{
-                options.UseSqlServer(Configuration.GetConnectionString("sqlServer"), opts =>{
+            services.AddDbContext<VWFContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("sqlServer"), opts =>
+                {
                     opts.EnableRetryOnFailure(2);
                 });
             });
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
+                options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
+            })
+            .AddOktaWebApi(new OktaWebApiOptions()
+            {
+                OktaDomain = Configuration["Okta:OktaDomain"],
+            });
+
+            services.AddAuthorization();
 
             services.AddScoped<UnitOfWork>();
         }
@@ -54,9 +69,11 @@ namespace StoringApi.Service
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "StoringApi.Service v1"));
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseAuthorization();
 
