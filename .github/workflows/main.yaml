@@ -58,7 +58,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: VideoWithFriendsClient
+          app-name: videoswithfriends-client
           images: videoswithfriends/revature-videoswithfriends:v1
 on:
   push:
