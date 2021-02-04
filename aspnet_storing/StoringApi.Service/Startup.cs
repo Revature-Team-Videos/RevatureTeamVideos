@@ -38,10 +38,11 @@ namespace StoringApi.Service
 
             services.AddDbContext<VWFContext>(options =>
             {
-                options.UseSqlServer("Server=revature-video-with-friends.database.windows.net,1433;Initial Catalog=RevatureVideoWithFriends;User ID=sqladmin;Password=Password123;", opts =>
-                {
-                    opts.EnableRetryOnFailure(2);
-                });
+                // options.UseSqlServer("Server=revature-video-with-friends.database.windows.net,1433;Initial Catalog=RevatureVideoWithFriends;User ID=sqladmin;Password=Password123;", opts =>
+                // {
+                //     opts.EnableRetryOnFailure(2);
+                // });
+                options.UseSqlServer("Server=revature-video-with-friends.database.windows.net,1433;Initial Catalog=RevatureVideoWithFriends;User ID=sqladmin;Password=Password123;");
             });
 /*             services.AddAuthentication(options =>
             {
