@@ -43,16 +43,16 @@ namespace StoringApi.Service
                     opts.EnableRetryOnFailure(2);
                 });
             });
-            services.AddAuthentication(options =>
+/*             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = OktaDefaults.ApiAuthenticationScheme;
                 options.DefaultChallengeScheme = OktaDefaults.ApiAuthenticationScheme;
                 options.DefaultSignInScheme = OktaDefaults.ApiAuthenticationScheme;
-            })
-            .AddOktaWebApi(new OktaWebApiOptions()
+            }) */
+            /* .AddOktaWebApi(new OktaWebApiOptions()
             {
                 OktaDomain = Configuration["OktaDomain"],
-            });
+            }); */
 
             services.AddAuthorization();
 
@@ -82,7 +82,7 @@ namespace StoringApi.Service
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseAuthorization();
 
