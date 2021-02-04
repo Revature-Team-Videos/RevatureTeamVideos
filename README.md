@@ -30,3 +30,14 @@ To-Do List:
 - Allow the host to kick a viewer from the room.
 
 ## Getting Started
+This is a web application - go to https://video-with-friends.azurewebsites.net on ie 11 ONLY to get started
+
+## Usage
+Once at the webpage follow the instructions and enjoy viewing the videos!
+
+## Contributers
+Zach Sanders, Jim Phan, Yichen
+
+## License
+This project uses the following license: <afl-3.0>
+
