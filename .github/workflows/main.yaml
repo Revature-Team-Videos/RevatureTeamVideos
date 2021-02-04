@@ -44,8 +44,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
       - run: docker image build -f ../Dockerfile -t videoshare ..
-      - run: docker image tag videoshare videoswithfriends/revature-videoswithfriends:v1
-      - run: docker push videoswithfriends/revature-videoswithfriends:v1
+      - run: docker image tag videoshare videoswithfriends/revature-videoswithfriends
+      - run: docker push videoswithfriends/revature-videoswithfriends
       - run: docker logout
 
   deploy:
@@ -59,7 +59,7 @@ jobs:
       - uses: azure/webapps-deploy@v2
         with:
           app-name: videoswithfriends-client
-          images: videoswithfriends/revature-videoswithfriends:v1
+          images: videoswithfriends/revature-videoswithfriends
 on:
   push:
     branches:
