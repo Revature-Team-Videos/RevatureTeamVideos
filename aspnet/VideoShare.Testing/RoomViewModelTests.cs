@@ -17,7 +17,7 @@ namespace VideoShare.Testing
         private void Test_GetChannelName()
         {
             RoomViewModel test = new RoomViewModel();
-            test.VideoUrl = "https://player.twitch.tv/?&channel=Jack&parent=localhost";
+            test.VideoUrl = "https://player.twitch.tv/?&channel=Jack&parent=https://videos-with-friends.azurewebsites.net";
             string ChannelName = test.GetChannelName().Trim();
 
             Assert.Equal("Jack", ChannelName);
