@@ -4,13 +4,14 @@
   <div class="row">
     <div class="col-xs-12 col-md-6">
       @{
-        <iframe
+@*         <iframe
           src=@Model.Room.VideoUrl
           height="500"
           width="100%"
           allowfullscreen="true">
-        </iframe>
+        </iframe> *@
       }
+      <div id="twitch-embed"></div>
     </div>
     <div class="col-xs-12 col-md-6">
       <div class="row">
@@ -29,3 +30,15 @@
     </div>
   </div>
 </div>
+
+
+
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<script type="text/javascript">
+  new Twitch.Embed("twitch-embed", {
+    width: '100%',
+    height: '500',
+    channel: @Model.Room.GetChannelName()
+    parent: ['videos-with-friends.azurewebsites.net']\
+  });
+</script>
