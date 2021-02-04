@@ -28,9 +28,22 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
       - run: docker image build -f ../dockerfiles/twitchapi/dockerfile -t twitchapi ..
-      - run: docker image tag twitchapi videoswithfriends/twitchapi:v1
-      - run: docker push videoswithfriends/twitchapi:v1
+      - run: docker image tag twitchapi videoswithfriends/twitchapi
+      - run: docker push videoswithfriends/twitchapi
       - run: docker logout
+
+  deploy:
+    needs: pack
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS_ZACH }}
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: SP-Twitch
+          images: videoswithfriends/twitchapi
 
 on:
   push:

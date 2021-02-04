@@ -51,7 +51,7 @@ namespace StoringApi.Service
             })
             .AddOktaWebApi(new OktaWebApiOptions()
             {
-                OktaDomain = Configuration["Okta:OktaDomain"],
+                OktaDomain = Configuration["OktaDomain"],
             });
 
             services.AddAuthorization();

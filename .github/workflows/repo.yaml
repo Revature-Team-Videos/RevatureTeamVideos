@@ -28,9 +28,22 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
       - run: docker image build -f ../dockerfiles/storingapi/dockerfile -t storingapi ..
-      - run: docker image tag storingapi videoswithfriends/storingapi:v1
-      - run: docker push videoswithfriends/storingapi:v1
+      - run: docker image tag storingapi videoswithfriends/storingapi
+      - run: docker push videoswithfriends/storingapi
       - run: docker logout
+
+  deploy:
+    needs: pack
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: videos-with-repo
+          images: videoswithfriends/storingapi
 
 on:
   push:
