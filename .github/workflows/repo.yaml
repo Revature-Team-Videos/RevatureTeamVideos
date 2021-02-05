@@ -42,7 +42,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS_ZACH }}
       - uses: azure/webapps-deploy@v2
         with:
-          app-name: video-repo-friends
+          app-name: video-with-friends-repo
           images: videoswithfriends/storingapi
 
 on:
