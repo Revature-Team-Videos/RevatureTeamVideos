@@ -14,7 +14,7 @@ namespace VideoShare.Client.Models
         {
             return VideoUrl
                 .Replace("https://player.twitch.tv/?&channel=", "")
-                .Replace("&parent=videos-with-friends.azurewebsites.net", "");
+                .Replace("&parent=videos-with-friends-client.azurewebsites.net", "");
         }
 
         public override string ToString()

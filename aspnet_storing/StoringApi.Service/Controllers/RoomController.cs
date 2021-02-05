@@ -99,7 +99,7 @@ namespace StoringApi.Service.Controllers
       var room = new Room();
       room.Party.Add(user);
       room.Host = room.Party.FirstOrDefault();
-      room.VideoUrl = $"https://player.twitch.tv/?&channel={channel}&parent=videos-with-friends.azurewebsites.net";
+      room.VideoUrl = $"https://player.twitch.tv/?&channel={channel}&parent=videos-with-friends-client.azurewebsites.net";
 
       _context.Add(room);
       _context.Save();
